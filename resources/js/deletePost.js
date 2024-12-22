@@ -1,6 +1,7 @@
 export const deletePost = () => {
     const token = localStorage.getItem("auth_token");
     const deleteBtns = document.querySelectorAll(".delete-btn");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
     try {
         deleteBtns.forEach((deleteBtn) => {
@@ -13,14 +14,12 @@ export const deletePost = () => {
 
                 const response = await fetch(`/api/${postId}/edit`, {
                     method: "DELETE",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector(
-                            'meta[name="csrf-token"]'
-                        ).content,
+                        "X-CSRF-TOKEN": csrfToken,
                         Authorization: `Bearer ${token}`,
                     },
-                    credentials: "include",
                 });
                 if (response.ok) {
                     window.location.reload();

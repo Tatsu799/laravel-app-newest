@@ -3,24 +3,22 @@ import { deletePost } from "./deletePost";
 
 const getPostsData = () => {
     const token = localStorage.getItem("auth_token");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     document.addEventListener("DOMContentLoaded", async (event) => {
         event.preventDefault();
 
         try {
             const postResponse = await fetch("/api/posts", {
                 method: "GET",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document.querySelector(
-                        'meta[name="csrf-token"]'
-                    ).content,
+                    "X-CSRF-TOKEN": csrfToken,
                     Authorization: `Bearer ${token}`,
                 },
-                credentials: "include",
             });
 
             const data = await postResponse.json();
-            console.log(data);
             if (postResponse.ok) {
                 if (data.body.length !== 0) {
                     const postList = document.getElementById("postList");

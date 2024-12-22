@@ -13,13 +13,13 @@ const loginUser = () => {
             try {
                 const response = await fetch("/api/loginUser", {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
                         "X-CSRF-TOKEN": csrfToken,
                     },
                     body: JSON.stringify({ email, password }),
-                    credentials: "include",
                 });
 
                 if (response.ok) {

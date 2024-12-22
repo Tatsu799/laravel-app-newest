@@ -7,28 +7,29 @@ const updateData = () => {
             const postId = window.location.pathname.split("/")[1];
             const updatedText = document.querySelector("#text").value;
             const token = localStorage.getItem("auth_token");
+            const csrfToken = document.querySelector(
+                'meta[name="csrf-token"]'
+            ).content;
 
             try {
                 const response = await fetch(`/api/${postId}/edit`, {
                     method: "PUT",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
-                        "X-CSRF-TOKEN": document.querySelector(
-                            'meta[name="csrf-token"]'
-                        ).content,
+                        "X-CSRF-TOKEN": csrfToken,
                     },
                     body: JSON.stringify({
                         text: updatedText,
                     }),
-                    credentials: "include",
                 });
 
                 if (response.ok) {
                     window.location.href = "/posts";
                 } else {
-                    alert("更新する権限がありません。");
-                    window.location.href = "/posts";
+                    // alert("入力が正しくありません。内容を確認してください。");
+                    text.style.display = "block";
                     throw new Error("Failed to update post");
                 }
             } catch (error) {

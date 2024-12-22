@@ -15,13 +15,13 @@ const registerUser = () => {
             try {
                 const response = await fetch("/api/registerUser", {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
                         "X-CSRF-TOKEN": csrfToken,
                     },
                     body: JSON.stringify({ name, email, password }),
-                    credentials: "include",
                 });
 
                 if (response.ok) {

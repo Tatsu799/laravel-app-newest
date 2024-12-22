@@ -22,7 +22,8 @@
 <div class="container mx-auto p-6">
     <div class="bg-white p-8 mb-10 rounded shadow-md w-full mx-auto max-w-lg">
         <h2 class="text-gray-600 mb-6">ログイン</h2>
-    <div class="container__login-box">
+    <form class="container__login-box">
+        @csrf
         <div class="container__login-box__name">
             <label for="name" class="__input-label">Name</label>
             <input type="text" name="name" id="name" placeholder="名前を入力してください。"class="__input-box">
@@ -38,8 +39,8 @@
         <button id="login-btn" type="submit"
                 class="w-full bg-indigo-900 text-white py-2 rounded-md hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-800 focus:ring-opacity-50">
                 ログイン
-            </button>
-    </div>
+        </button>
+    </form>
 </body>
 </html>
 

@@ -10,6 +10,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Route::middleware('auth:sanctum')->get('/api/protected', function () {
+//     return "You are authenticated via token.";
+// });
+
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('posts', [PostController::class, 'getData'])->name('posts.getData');

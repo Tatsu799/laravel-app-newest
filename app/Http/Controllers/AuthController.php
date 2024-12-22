@@ -12,18 +12,30 @@ class AuthController extends Controller
 
     public function showRegister()
     {
-        if (Auth::check()) {
-            return view('/');
+        // if (Auth::check()) {
+        //     return view('/');
+        // }
+
+        $user = Auth::guard('web')->user();
+        if ($user) {
+            return redirect()->route('/');
         }
 
         return view('registerUser');
     }
 
-    public function showLogin()
+    public function showLogin(Request $request)
     {
-        if (Auth::check()) {
-            return view('/');
-        }
+
+        // $user = $request->user();
+        // $user = Auth::guard('web')->user();
+        // if (Auth::check()) {
+        //     return view('/');
+        // }
+        // dd($user);
+        // if ($user) {
+        //     return redirect()->route('/');
+        // }
 
         return view('loginUser');
     }
@@ -92,6 +104,7 @@ class AuthController extends Controller
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
+            $request->user()->tokens()->delete();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Successful'

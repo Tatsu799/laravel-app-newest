@@ -1,6 +1,7 @@
 export const likeHandler = () => {
     const likeButtons = document.querySelectorAll(".like-button");
     const token = localStorage.getItem("auth_token");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     likeButtons.forEach((button) => {
         button.addEventListener("click", async () => {
             const postId = button.dataset.postId;
@@ -9,14 +10,12 @@ export const likeHandler = () => {
             const method = isLiked ? "DELETE" : "POST";
             const response = await fetch(url, {
                 method: method,
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document.querySelector(
-                        'meta[name="csrf-token"]'
-                    ).content,
+                    "X-CSRF-TOKEN": csrfToken,
                     Authorization: `Bearer ${token}`,
                 },
-                credentials: "include",
             });
 
             if (response.ok) {

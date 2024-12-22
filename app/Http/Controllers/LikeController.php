@@ -11,9 +11,10 @@ class LikeController extends Controller
 {
 
     // いいねする
-    public function like(Post $post)
+    public function like(Post $post, Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
+        $user = $request->user(); //api?
         if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
@@ -31,9 +32,10 @@ class LikeController extends Controller
         ]);
     }
 
-    public function unlike(Post $post)
+    public function unlike(Post $post, Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
+        $user = $request->user(); //api?
         // いいねを削除
         $post->likes()->where('user_id', $user->id)->delete();
 

@@ -35,11 +35,12 @@ class PostController extends Controller
         }
     }
 
-    function getData()
+    function getData(Request $request)
     {
-
         try {
-            $user = Auth::user();
+            ///どちらか一方
+            // $user = Auth::user(); web?
+            $user = $request->user(); //api?
             if (!$user) {
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
@@ -79,7 +80,8 @@ class PostController extends Controller
             ]);
 
             $post = Post::findOrFail($id);
-            $user = Auth::user();
+            // $user = Auth::user();
+            $user = $request->user(); //api?
             if ($post->user_id !== $user->id) {
                 return response()->json(['message' => 'Forbidden: You cannot update this post'], 403);
             }
@@ -98,10 +100,11 @@ class PostController extends Controller
         }
     }
 
-    function delete($id)
+    function delete(Request $request, $id)
     {
 
-        $user = Auth::user();
+        // $user = Auth::user();
+        $user = $request->user(); //api?
         $post = Post::findOrFail($id);
         if ($post->user_id !== $user->id) {
             return response()->json(['message' => 'Forbidden: You cannot delete this post'], 403);

@@ -11,7 +11,7 @@
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
         <p id="register-text" class="mb-3" style="display: none; color: red; font-weight: bold">登録失敗。入力内容を確認してください</p>
         <h1 class="text-2xl font-bold mb-4">ユーザー登録</h1>
-        <div >
+        <form>
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-700">名前</label>
@@ -32,7 +32,7 @@
             <button id="register-btn" type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
                 登録
             </button>
-        </div>
+        </form>
     </div>
 </body>
 </html>

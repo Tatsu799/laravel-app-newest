@@ -11,7 +11,8 @@
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded shadow-md w-full max-w-lg">
-        <p id="alert-text" class="mb-3" style="display: none; color: red; font-weight: bold">更新しました。</p>
+        {{-- <p id="alert-text" class="mb-3" style="display: none; color: red; font-weight: bold">更新しました。</p> --}}
+        <p id="alert-text" class="mb-3" style="display: none; color: red; font-weight: bold">入力が正しくありません。内容を確認してください。</p>
         <h1 class="text-2xl font-bold mb-4">編集画面</h1>
         <form >
             @csrf
