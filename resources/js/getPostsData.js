@@ -19,6 +19,8 @@ const getPostsData = () => {
             });
 
             const data = await postResponse.json();
+            console.log(data);
+
             if (postResponse.ok) {
                 if (data.body.length !== 0) {
                     const postList = document.getElementById("postList");
@@ -43,7 +45,9 @@ const getPostsData = () => {
                                         <div class="flex mt-2">
                                             <button class="like-button" data-post-id="${
                                                 post.id
-                                            }" data-liked="${post.isLiked}">
+                                            }" data-liked="${
+                            post.isLiked
+                        }" data-isOwner="${post.is}">
                                                 <span class="like-text">${
                                                     post.likes_count
                                                 } Likes</span>
@@ -52,7 +56,7 @@ const getPostsData = () => {
                                         </div>
                                     </div>
                                     <div class="ml-auto">
-                                        <form class="relative right-4" method="GET" action="${
+                                        <form class="update-btn relative top-1 right-4 bg-indigo-900 text-white py-1 px-3 rounded-full shadow-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition ease-in-out duration-200" method="GET" action="${
                                             post.id
                                         }/edit" style="display: ${
                             post.isOwner ? "block" : "none"
@@ -60,7 +64,7 @@ const getPostsData = () => {
                                             <button type="submit">編集</button>
                                         </form>
 
-                                        <button type="submit" class="delete-btn relative top-4 right-4" data-post-id="${
+                                        <button type="submit" class="delete-btn relative top-4 right-4 bg-red-500 text-white py-1 px-3 rounded-full shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 transition ease-in-out duration-200" data-post-id="${
                                             post.id
                                         }" style="display: ${
                             post.isOwner ? "block" : "none"

@@ -3,6 +3,12 @@ export const likeHandler = () => {
     const token = localStorage.getItem("auth_token");
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     likeButtons.forEach((button) => {
+        if (button.dataset.liked === "true") {
+            button.style.fontWeight = "700";
+        } else {
+            button.style.fontWeight = "400";
+        }
+
         button.addEventListener("click", async () => {
             const postId = button.dataset.postId;
             const isLiked = button.dataset.liked === "true";
@@ -21,9 +27,14 @@ export const likeHandler = () => {
             if (response.ok) {
                 const result = await response.json();
                 button.dataset.liked = !isLiked;
-                button.querySelector(
-                    ".like-text"
-                ).textContent = `${result.likes_count} Likes`;
+                const ele = button.querySelector(".like-text");
+                ele.textContent = `${result.likes_count} Likes`;
+
+                if (!isLiked) {
+                    ele.style.fontWeight = "700";
+                } else {
+                    ele.style.fontWeight = "400";
+                }
             }
         });
     });
