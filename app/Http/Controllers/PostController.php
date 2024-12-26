@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -35,22 +36,34 @@ class PostController extends Controller
         }
     }
 
-    function getData(Request $request)
+    function getData()
     {
         try {
-            ///どちらか一方
-            // $user = Auth::user(); web?
-            $user = $request->user(); //api?
+            //どちらか一方
+            $user = Auth::user();
+            // $user = $request->user();
             if (!$user) {
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
 
-            $posts = Post::withCount('likes')->orderby('created_at', 'desc')->get();
+            // $posts = Post::withCount('likes')->orderby('created_at', 'desc')->get();
 
-            $posts->each(function ($post) use ($user) {
-                $post->isLiked = $user ? $post->likes()->where('user_id', $user->id)->exists() : false;
-                $post->isOwner = $post->user_id === $user->id;
-            });
+            // $posts->each(function ($post) use ($user) {
+            //     $post->isLiked = $user ? $post->likes()->where('user_id', $user->id)->exists() : false;
+            //     $post->isOwner = $post->user_id === $user->id;
+            // });
+
+            $posts = DB::table('posts')
+                ->leftJoin('likes', 'posts.id', '=', 'likes.post_id')
+                ->select(
+                    'posts.id',
+                    'posts.text',
+                    'posts.user_id',
+                    DB::raw('COUNT(likes.id) as like_count')
+                )->groupBy('posts.id', 'posts.text', 'posts.user_id')
+                ->orderBy('posts.create_at', 'desc')
+                ->get();
+
 
             return response()->json([
                 'status' => 'Success',

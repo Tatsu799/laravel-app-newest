@@ -14,6 +14,7 @@ Route::get('/user', function (Request $request) {
 //     return "You are authenticated via token.";
 // });
 
+// Route::get('posts', [PostController::class, 'getData'])->name('posts.getData');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
